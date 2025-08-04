@@ -1,8 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { DocumentChunk } from '../types';
-import { LLMService } from './llm';
-import { config } from '../config';
+import { ChromaRAGService } from './chromadb-rag.js';
+import { DocumentChunk } from '../types/index.js';
+import { LLMService } from './llm.js';
+import { config } from '../config/index.js';
 
 export class RAGService {
   private chunks: DocumentChunk[] = [];

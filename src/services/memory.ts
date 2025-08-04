@@ -1,5 +1,5 @@
-import { SessionMemory } from '../types';
-import { config } from '../config';
+import { SessionMemory } from '../types/index.js';
+import { config } from '../config/index.js';
 
 export class MemoryService {
   private sessions: Map<string, SessionMemory> = new Map();

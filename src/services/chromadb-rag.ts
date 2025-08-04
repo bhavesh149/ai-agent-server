@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import { ChromaClient } from 'chromadb';
-import { DocumentChunk } from '../types';
-import { LLMService } from './llm';
-import { config } from '../config';
+import { DocumentChunk } from '../types/index.js';
+import { LLMService } from './llm.js';
+import { config } from '../config/index.js';
 
 export class ChromaRAGService {
   private chromaClient: ChromaClient;

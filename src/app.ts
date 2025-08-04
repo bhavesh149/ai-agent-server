@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-import agentRoutes, { initializeAgent } from './routes/agent';
-import { config } from './config';
+import agentRoutes, { initializeAgent } from './routes/agent.js';
+import { config } from './config/index.js';
 
 const app = express();
 

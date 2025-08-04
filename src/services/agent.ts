@@ -1,9 +1,9 @@
-import { LLMService } from './llm';
-import { MemoryService } from './memory';
-import { ChromaRAGService } from './chromadb-rag';
-import { WeatherPlugin } from '../plugins/weather';
-import { MathPlugin } from '../plugins/math';
-import { MessageRequest, MessageResponse, PluginResult, ToolInfo } from '../types';
+import { LLMService } from './llm.js';
+import { MemoryService } from './memory.js';
+import { ChromaRAGService } from './chromadb-rag.js';
+import { WeatherPlugin } from '../plugins/weather.js';
+import { MathPlugin } from '../plugins/math.js';
+import { MessageRequest, MessageResponse, PluginResult, ToolInfo } from '../types/index.js';
 
 export class AgentService {
   private llmService: LLMService;
