@@ -37,8 +37,8 @@ if [ -d "ai-agent" ]; then
     git pull
 else
     # Replace with your actual repository URL
-    git clone https://github.com/bhavesh149/ai-agent-server.git ai-agent
-    cd ai-agent
+    git clone https://github.com/bhavesh149/ai-agent-server.git
+    cd ai-agent-server
 fi
 
 # Install Node.js dependencies

@@ -1,28 +1,12 @@
-const os = require('os');
-const path = require('path');
-
-// Detect environment
-const isLinux = os.platform() === 'linux';
-const isProduction = process.env.NODE_ENV === 'production';
-const userHome = os.homedir();
-
-// Set paths based on environment
-const basePath = isLinux && isProduction 
-  ? '/home/ec2-user/ai-agent' 
-  : process.cwd();
-
-const pythonInterpreter = isLinux ? 'python3' : 'python';
-
 module.exports = {
   apps: [
     {
       name: 'chromadb-server',
       script: 'chroma',
       args: 'run --host 0.0.0.0 --port 8000',
-      interpreter: pythonInterpreter,
-      cwd: basePath,
+      interpreter: 'python',
       env: {
-        NODE_ENV: isProduction ? 'production' : 'development'
+        NODE_ENV: 'development'
       },
       log_file: './logs/chromadb.log',
       out_file: './logs/chromadb-out.log',
@@ -35,18 +19,13 @@ module.exports = {
     {
       name: 'ai-agent-server',
       script: 'dist/server.js',
-      cwd: basePath,
       instances: 1,
       exec_mode: 'fork',
       env: {
-        NODE_ENV: isProduction ? 'production' : 'development',
+        NODE_ENV: 'development',
         PORT: 3000,
         CHROMA_HOST: 'localhost',
         CHROMA_PORT: 8000
-      },
-      env_production: {
-        NODE_ENV: 'production',
-        PORT: 3000
       },
       log_file: './logs/ai-agent.log',
       out_file: './logs/ai-agent-out.log',
