@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { WeatherData, ToolUsageLog, PluginResult } from '../types/index.js';
-import { config } from '../config/index.js';
+import { WeatherData, PluginResult } from '../types';
+import { config } from '../config';
 
 export class WeatherPlugin {
   async execute(location: string): Promise<PluginResult> {

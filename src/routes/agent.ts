@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
-import { AgentService } from '../services/agent.js';
-import { MessageRequest } from '../types/index.js';
+import { AgentService } from '../services/agent';
+import { MessageRequest } from '../types';
 
 const router = Router();
 let agentService: AgentService;

@@ -17,13 +17,12 @@ module.exports = {
   apps: [
     {
       name: 'chromadb-server',
-      script: isLinux ? '/home/ec2-user/chroma_env/bin/python' : 'python',
-      args: isLinux ? '-m chromadb.cli.cli run --host 0.0.0.0 --port 8000 --path ./chroma_data' : '-m chromadb.cli.cli run --host 0.0.0.0 --port 8000 --path ./chroma_data',
+      script: 'chroma',
+      args: 'run --host 0.0.0.0 --port 8000',
+      interpreter: pythonInterpreter,
       cwd: basePath,
       env: {
-        NODE_ENV: isProduction ? 'production' : 'development',
-        VIRTUAL_ENV: isLinux ? '/home/ec2-user/chroma_env' : undefined,
-        PATH: isLinux ? `/home/ec2-user/chroma_env/bin:${process.env.PATH}` : process.env.PATH
+        NODE_ENV: isProduction ? 'production' : 'development'
       },
       log_file: './logs/chromadb.log',
       out_file: './logs/chromadb-out.log',

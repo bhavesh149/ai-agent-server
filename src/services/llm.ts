@@ -1,5 +1,5 @@
 import Groq from 'groq-sdk';
-import { config } from '../config/index.js';
+import { config } from '../config';
 
 export class LLMService {
   private groq: Groq;

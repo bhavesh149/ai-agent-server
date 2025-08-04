@@ -50,69 +50,71 @@ A sophisticated TypeScript-based AI agent server that combines Large Language Mo
                                                └─────────────────┘
 ```
 
-## � Quick Start
+## 📋 Prerequisites
 
-### Prerequisites
-- Node.js 18+ 
-- npm
-- Python 3.8+ (for ChromaDB)
-- Git
+- **Node.js** 18+ with npm
+- **TypeScript** 5.0+
+- **ChromaDB** server running on port 8000
+- **OpenWeather API** key ([Get here](https://openweathermap.org/api))
+- **Groq API** key ([Get here](https://console.groq.com/))
 
-### Local Development Setup
+## 🛠️ Setup Instructions
 
-1. **Clone and Install**
-   ```bash
-   git clone <repository-url>
-   cd ai-agent
-   npm install
-   ```
-
-2. **Environment Configuration**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your API keys:
-   # GROQ_API_KEY=your_groq_api_key_here
-   # OPENWEATHER_API_KEY=your_openweather_api_key_here
-   ```
-
-3. **Setup ChromaDB (Local Development)**
-   ```bash
-   # Create Python virtual environment
-   python -m venv chroma_env
-   
-   # Windows
-   chroma_env\Scripts\activate
-   
-   # Linux/Mac
-   source chroma_env/bin/activate
-   
-   # Install ChromaDB
-   pip install chromadb
-   
-   # Start ChromaDB server
-   python -m chromadb.cli.cli run --host 0.0.0.0 --port 8000 --path ./chroma_data
-   ```
-
-4. **Start Development Server**
-   ```bash
-   # In a new terminal
-   npm run dev
-   ```
-
-### Production Deployment (AWS EC2)
-
-For production deployment on AWS EC2 with Amazon Linux 2023, use our automated deployment script:
+### 1. Environment Setup
 
 ```bash
-# On your EC2 instance
-wget https://raw.githubusercontent.com/your-repo/ai-agent/main/deploy-amazon-linux.sh
-chmod +x deploy-amazon-linux.sh
-./deploy-amazon-linux.sh
+git clone https://github.com/bhavesh149/ai-agent-server.git
+cd ai-agent-server
+npm install
+
+### 2. Environment Configuration
+
+Create a `.env` file in the root directory:
+
+```env
+OPENWEATHER_API_KEY=your_openweather_api_key
+GROQ_API_KEY=your_groq_api_key
+PORT=3000
+CHROMA_HOST=localhost
+CHROMA_PORT=8000
 ```
 
-See [AWS-DEPLOYMENT.md](./AWS-DEPLOYMENT.md) for detailed deployment instructions.
+### 3. ChromaDB Setup
 
----
+Start ChromaDB server (required for RAG functionality):
+
+```bash
+# Install ChromaDB Python package
+python3 -m venv venv
+source venv/bin/activate
+pip install chromadb
+
+# Start ChromaDB server
+chroma run --host 0.0.0.0 --port 8000
+```
+
+**Note:** Keep this running in a separate terminal.
+
+### 4. Knowledge Base Setup
+
+Place your markdown files in the `documents/` directory. The system will automatically:
+- 📄 Chunk documents into manageable pieces
+- 🔤 Generate embeddings for semantic search  
+- 💾 Store them in ChromaDB for efficient retrieval
+- 🔍 Enable semantic search capabilities
+
+### 5. Build and Run
+
+```bash
+# Development mode (with auto-reload)
+npm run dev
+
+# Production build
+npm run build
+npm start
+```
+
+The server will start on `http://localhost:3000`
 
 ## 📡 API Endpoints
 
@@ -667,27 +669,7 @@ For detailed deployment instructions, see [AWS-DEPLOYMENT.md](./AWS-DEPLOYMENT.m
 - **Memory Management**: Automatic cleanup and memory limit enforcement
 - **Multi-user Support**: Concurrent session handling
 
-## 🚀 Deployment Status
-
-### ✅ Production Ready
-The AI Agent is now fully configured and tested for production deployment:
-
-- **ES Module Support**: All TypeScript imports properly configured with `.js` extensions
-- **Clean Build**: TypeScript compilation successful with zero errors
-- **Module Resolution**: All relative imports working correctly in ES module environment
-- **PM2 Configuration**: Production-ready process management with smart environment detection
-- **AWS EC2 Ready**: Automated deployment scripts tested for Amazon Linux 2023
-- **Cross-Platform**: Works on Windows (development) and Linux (production)
-
-### 🔧 Technical Validation
-- ✅ TypeScript builds without errors (`npm run build`)
-- ✅ Server starts successfully with proper ES module imports
-- ✅ All services properly initialize (LLM, Memory, RAG, Plugins)
-- ✅ API endpoints functional (`/api/agent`, `/api/tools`, `/health`)
-- ✅ PM2 ecosystem configuration optimized for production
-- ✅ Environment detection working for development and production modes
-
-### 📦 Deployment Options
+## 🚀 Deployment Options
 
 ### Local Development
 ```bash

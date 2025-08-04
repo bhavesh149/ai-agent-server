@@ -1,7 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { app, initializeAgent } from './app.js';
-import { config } from './config/index.js';
+import { app, initializeAgent } from './app';
+import { config } from './config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

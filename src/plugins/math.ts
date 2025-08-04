@@ -1,4 +1,4 @@
-import { MathResult, ToolUsageLog, PluginResult } from '../types/index.js';
+import { MathResult, PluginResult } from '../types';
 
 export class MathPlugin {
   async execute(expression: string): Promise<PluginResult> {
