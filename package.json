@@ -10,6 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy:setup": "chmod +x *.sh && ./deploy-ec2.sh",
     "pm2:start": "chmod +x pm2-manager.sh && ./pm2-manager.sh start",
+    "pm2:start-prod": "NODE_ENV=production pm2 start ecosystem.config.cjs",
+    "pm2:start-dev": "pm2 start ecosystem.dev.cjs",
     "pm2:stop": "./pm2-manager.sh stop",
     "pm2:restart": "./pm2-manager.sh restart",
     "pm2:status": "./pm2-manager.sh status",
