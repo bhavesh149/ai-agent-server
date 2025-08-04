@@ -531,15 +531,25 @@ The system includes comprehensive testing coverage:
 
 ## ☁️ AWS EC2 Deployment
 
-### 🚀 Quick Deployment
+### 🚀 Quick Deployment Options
 
-**1. Launch EC2 Instance:**
+**Option 1: Amazon Linux 2023 (Recommended)**
+- **AMI**: Amazon Linux 2023 AMI
+- **Default User**: `ec2-user`
+- **Package Manager**: `dnf`
+
+```bash
+# Upload and run deployment script
+scp -i your-key.pem deploy-amazon-linux.sh ec2-user@your-ec2-ip:/home/ec2-user/
+ssh -i your-key.pem ec2-user@your-ec2-ip
+chmod +x deploy-amazon-linux.sh && ./deploy-amazon-linux.sh
+```
+
+**Option 2: Ubuntu Server 22.04 LTS**
 - **AMI**: Ubuntu Server 22.04 LTS
-- **Instance Type**: t3.medium (2 vCPU, 4GB RAM)
-- **Storage**: 20GB GP3
-- **Security Group**: Allow ports 22 (SSH) and 3000 (HTTP)
+- **Default User**: `ubuntu`
+- **Package Manager**: `apt`
 
-**2. Deploy with one command:**
 ```bash
 # Upload and run deployment script
 scp -i your-key.pem deploy-ec2.sh ubuntu@your-ec2-ip:/home/ubuntu/
@@ -547,7 +557,12 @@ ssh -i your-key.pem ubuntu@your-ec2-ip
 chmod +x deploy-ec2.sh && ./deploy-ec2.sh
 ```
 
-**3. Configure and start:**
+**Instance Requirements:**
+- **Instance Type**: t3.medium (2 vCPU, 4GB RAM)
+- **Storage**: 20GB GP3
+- **Security Group**: Allow ports 22 (SSH) and 3000 (HTTP)
+
+**Configure and start:**
 ```bash
 # Add your API keys
 nano .env

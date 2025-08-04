@@ -56,7 +56,7 @@ start_services() {
     activate_venv
     
     # Start services using PM2
-    pm2 start ecosystem.config.js
+    pm2 start ecosystem.config.cjs
     
     print_success "Services started successfully!"
     pm2 status
@@ -127,9 +127,9 @@ monitor_services() {
 setup_services() {
     print_status "Setting up AI Agent services for first time..."
     
-    # Check if ecosystem.config.js exists
-    if [ ! -f "ecosystem.config.js" ]; then
-        print_error "ecosystem.config.js not found in current directory"
+    # Check if ecosystem.config.cjs exists
+    if [ ! -f "ecosystem.config.cjs" ]; then
+        print_error "ecosystem.config.cjs not found in current directory"
         exit 1
     fi
     
@@ -140,7 +140,7 @@ setup_services() {
     activate_venv
     
     # Start services
-    pm2 start ecosystem.config.js
+    pm2 start ecosystem.config.cjs
     
     # Setup PM2 to start on boot
     print_status "Setting up PM2 to start on boot..."
