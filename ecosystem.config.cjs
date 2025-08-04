@@ -8,7 +8,7 @@ const userHome = os.homedir();
 
 // Set paths based on environment
 const basePath = isLinux && isProduction 
-  ? '/home/ec2-user/ai-agent' 
+  ? '/home/ec2-user/ai-agent-server' 
   : process.cwd();
 
 const pythonInterpreter = isLinux ? 'python3' : 'python';
