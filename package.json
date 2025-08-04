@@ -1,0 +1,44 @@
+{
+  "name": "ai-agent",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy:setup": "chmod +x *.sh && ./deploy-ec2.sh",
+    "pm2:start": "chmod +x pm2-manager.sh && ./pm2-manager.sh start",
+    "pm2:stop": "./pm2-manager.sh stop",
+    "pm2:restart": "./pm2-manager.sh restart",
+    "pm2:status": "./pm2-manager.sh status",
+    "pm2:logs": "./pm2-manager.sh logs",
+    "pm2:setup": "./pm2-manager.sh setup",
+    "pm2:deploy": "./pm2-manager.sh deploy",
+    "pm2:backup": "./pm2-manager.sh backup"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@chroma-core/default-embed": "^0.1.8",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.2.0",
+    "axios": "^1.11.0",
+    "chromadb": "^3.0.10",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "groq-sdk": "^0.29.0",
+    "nodemon": "^3.1.10",
+    "openai": "^5.11.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.3"
+  }
+}
