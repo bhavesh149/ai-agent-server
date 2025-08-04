@@ -18,7 +18,7 @@ sudo dnf install -y nodejs
 
 # Install Python and pip
 echo "🐍 Installing Python and pip..."
-sudo dnf install -y python3 python3-pip python3-venv
+sudo dnf install -y python3 python3-pip python3-devel gcc
 
 # Install PM2 globally
 echo "⚙️ Installing PM2..."
@@ -50,8 +50,10 @@ echo "🔨 Building TypeScript project..."
 npm run build
 
 # Create Python virtual environment for ChromaDB
-echo "🐍 Setting up Python virtual environment..."
-python3 -m venv chromadb-venv
+if [ ! -d "chromadb-venv" ]; then
+  echo "🐍 Creating Python virtual environment..."
+  python3 -m venv chromadb-venv
+fi
 source chromadb-venv/bin/activate
 pip install --upgrade pip
 pip install chromadb
