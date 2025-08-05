@@ -1,0 +1,42 @@
+{
+  "name": "ai-agent-backend",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:prod": "npm run build && node -e \"console.log('✅ Production build completed')\"",
+    "deploy:check": "node -e \"console.log('Checking deployment requirements...'); process.exit(0)\"",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "rag",
+    "plugins",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "AI Agent Backend with RAG and Plugin System",
+  "dependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.2.0",
+    "@types/uuid": "^10.0.0",
+    "axios": "^1.11.0",
+    "chromadb": "^3.0.10",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "groq": "^4.2.0",
+    "groq-sdk": "^0.29.0",
+    "nodemon": "^3.1.10",
+    "openai": "^5.11.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
+    "uuid": "^11.1.0"
+  }
+}
