@@ -2,6 +2,8 @@
 
 A sophisticated AI agent backend built with TypeScript and Node.js, featuring Retrieval-Augmented Generation (RAG), plugin system, and conversational memory.
 
+🌐 **Repository**: [https://github.com/bhavesh149/ai-agent-server.git](https://github.com/bhavesh149/ai-agent-server.git)
+
 ## 🚀 Features
 
 - **LLM Integration**: Uses Groq API with Llama3 model for intelligent responses
@@ -38,9 +40,12 @@ A sophisticated AI agent backend built with TypeScript and Node.js, featuring Re
 
 ## 🛠️ Setup Steps
 
-1. **Clone and install dependencies:**
+### Local Development
+
+1. **Clone the repository:**
 ```bash
-cd ai-agent-backend
+git clone https://github.com/bhavesh149/ai-agent-server.git
+cd ai-agent-server
 npm install
 ```
 
@@ -171,10 +176,176 @@ Documents are automatically chunked, embedded, and indexed for similarity search
 
 ## 🚀 Production Deployment
 
-### Docker Deployment
+### AWS EC2 Deployment
+
+#### 1. EC2 Instance Setup
 ```bash
+# Launch Ubuntu 22.04 LTS instance (t3.small or larger recommended)
+# Security Groups: Allow inbound traffic on ports 22 (SSH), 80 (HTTP), 443 (HTTPS), 3000 (API)
+
+# Connect to your EC2 instance
+ssh -i your-key.pem ubuntu@your-ec2-ip
+```
+
+#### 2. Server Dependencies Installation
+```bash
+# Update system packages
+sudo apt update && sudo apt upgrade -y
+
+# Install Node.js 18.x
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# Install PM2 for process management
+sudo npm install -g pm2
+
+# Install Nginx (optional, for reverse proxy)
+sudo apt install nginx -y
+
+# Install Git
+sudo apt install git -y
+```
+
+#### 3. Application Deployment
+```bash
+# Clone the repository
+git clone https://github.com/bhavesh149/ai-agent-server.git
+cd ai-agent-server
+
+# Install dependencies
+npm install
+
+# Create production environment file
+sudo nano .env
+```
+
+**Environment Configuration (.env):**
+```bash
+# Required API Keys
+GROQ_API_KEY=your_groq_api_key_here
+OPENWEATHER_API_KEY=your_openweather_api_key_here
+
+# Server Configuration
+PORT=3000
+NODE_ENV=production
+
+# Optional: Database URLs (if using external databases)
+# VECTOR_DB_URL=your_vector_db_url
+# REDIS_URL=your_redis_url_for_sessions
+```
+
+#### 4. Build and Start Application
+```bash
+# Build the TypeScript application
+npm run build
+
+# Start with PM2 for production
+pm2 start dist/index.js --name "ai-agent-backend"
+
+# Save PM2 configuration
+pm2 save
+
+# Setup PM2 to start on boot
+pm2 startup
+# Follow the instructions provided by the command above
+```
+
+#### 5. Nginx Reverse Proxy (Recommended)
+```bash
+# Create Nginx configuration
+sudo nano /etc/nginx/sites-available/ai-agent
+
+# Add the following configuration:
+server {
+    listen 80;
+    server_name your-domain.com;  # Replace with your domain or EC2 public IP
+    
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+# Enable the site
+sudo ln -s /etc/nginx/sites-available/ai-agent /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+#### 6. SSL/HTTPS Setup (Optional but Recommended)
+```bash
+# Install Certbot for Let's Encrypt
+sudo apt install certbot python3-certbot-nginx -y
+
+# Get SSL certificate
+sudo certbot --nginx -d your-domain.com
+```
+
+#### 7. Monitoring and Maintenance
+```bash
+# View application logs
+pm2 logs ai-agent-backend
+
+# Monitor application status
+pm2 status
+
+# Restart application
+pm2 restart ai-agent-backend
+
+# View system resources
+pm2 monit
+
+# Update application
+git pull
+npm run build
+pm2 restart ai-agent-backend
+```
+
+### Docker Deployment on EC2
+### Docker Deployment on EC2
+
+#### 1. Install Docker on EC2
+```bash
+# Install Docker
+sudo apt update
+sudo apt install docker.io -y
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker ubuntu
+
+# Install Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Logout and login again for group changes to take effect
+```
+
+#### 2. Deploy with Docker
+```bash
+# Clone repository
+git clone https://github.com/bhavesh149/ai-agent-server.git
+cd ai-agent-server
+
+# Create .env file
+nano .env
+
+# Build and run container
 docker build -t ai-agent-backend .
-docker run -p 3000:3000 --env-file .env ai-agent-backend
+docker run -d --name ai-agent \
+  --restart unless-stopped \
+  -p 3000:3000 \
+  --env-file .env \
+  ai-agent-backend
+
+# Or use with docker-compose (create docker-compose.yml)
+docker-compose up -d
 ```
 
 ### Environment Variables
@@ -210,9 +381,13 @@ NODE_ENV=production
 
 ### Scripts
 - `npm run dev` - Development server with hot reload
-- `npm run build` - Build TypeScript to JavaScript
+- `npm run build` - Build TypeScript to JavaScript  
 - `npm start` - Start production server
 - `npm test` - Run tests (TBD)
+- `npm run pm2:start` - Start with PM2 process manager
+- `npm run pm2:restart` - Restart PM2 process
+- `npm run pm2:logs` - View PM2 logs
+- `npm run deploy:ec2` - Build and deploy to EC2
 
 ### Code Structure
 ```
@@ -223,6 +398,22 @@ src/
 ├── services/             # Business logic services
 ├── plugins/              # Plugin implementations
 └── middleware/           # Express middleware
+```
+
+## 🌐 EC2 Deployment
+
+For comprehensive EC2 deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
+
+**Quick EC2 Deployment:**
+```bash
+# On your EC2 instance
+git clone https://github.com/bhavesh149/ai-agent-server.git
+cd ai-agent-server
+chmod +x deploy.sh
+./deploy.sh setup
+./deploy.sh deploy
+# Edit .env file with your API keys
+./deploy.sh start
 ```
 
 ## 🤝 Contributing

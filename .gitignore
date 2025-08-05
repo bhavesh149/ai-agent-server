@@ -59,3 +59,5 @@ coverage/
 PROJECT_SUMMARY.md
 deployment
 scripts
+*.conf
+*.sh

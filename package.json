@@ -9,7 +9,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:prod": "npm run build && node -e \"console.log('✅ Production build completed')\"",
     "deploy:check": "node -e \"console.log('Checking deployment requirements...'); process.exit(0)\"",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "pm2:start": "pm2 start dist/index.js --name ai-agent-backend",
+    "pm2:restart": "pm2 restart ai-agent-backend",
+    "pm2:stop": "pm2 stop ai-agent-backend",
+    "pm2:logs": "pm2 logs ai-agent-backend",
+    "deploy:ec2": "npm run build && pm2 restart ai-agent-backend || pm2 start dist/index.js --name ai-agent-backend"
   },
   "keywords": [
     "ai",
