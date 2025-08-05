@@ -61,3 +61,4 @@ deployment
 scripts
 *.conf
 *.sh
+DEPLOYMENT.md
